@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>book-my-stay</title>
+    <style>
+        input{
+            width: 500px;
+            height: 50px;
+        }
+        textarea{
+            width: 500px;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    
+    <form action="/listings/<%=editData._id%>?_method=PUT" method="post">
+      <input type="text" name="_id" value=<%=editData._id%>> <br><br>
+      <input type="text" name="title" value=<%=editData.title%>><br><br>
+      <textarea name="description"><%=editData.description%></textarea><br><br>
+      <input type="number" name="price" value=<%=editData.price%>><br><br>
+      <input type="text" name="location" value=<%=editData.location%>><br><br>
+      <input type="text" name="country" value=<%=editData.country%>><br><br>
+      <button>save</button>
+    </form>
+</body>
+</html>

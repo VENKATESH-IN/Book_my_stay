@@ -1,0 +1,19 @@
+create a model called listing
+
+title
+description
+image
+price
+location
+country
+-add a default imaage 
+
+
+initialization of data
+
+index route
+--get /listings
+--get /listings/id show route
+  dolocalstring()
+--get /listings/new --form submit post req /listings
+--get /listings/id/edit --form submit put req /listings/id

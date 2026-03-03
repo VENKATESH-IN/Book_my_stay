@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>All listings</h1>
+    <form method="get" action="/listings/new" >
+        <button>ADD NEW LISTING</button>
+    </form>
+    <ul>
+      <% for(place of allListings){ %>
+        <a href="/listing/<%=place._id %>"><li><%=place.title%></li> </a>
+     <% } %>
+    </ul>
+    
+</body>
+</html>

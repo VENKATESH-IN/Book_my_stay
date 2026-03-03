@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>book-my-stay</title>
+</head>
+<body>
+    <ul>
+        <li><%= Listings._id %></li><br>
+        <li><%= Listings.title %></li><br>
+        <li><%= Listings.description %></li><br>
+        <li>&#8377; <%= Listings.price.toLocaleString("en-IN") %></li><br>
+        <li><%= Listings.location %></li><br>
+        <li><%= Listings.country %></li><br>
+    </ul>
+    <form action="/listings/<%= Listings._id %>/edit" method="get" >
+        <button>EDIT</button>
+    </form>
+    <form action="/listings/<%= Listings._id %>?_method=DELETE" method="post" onsubmit="return confirm('Are you want do delete permentely')">
+        <button>delete</button>
+    </form>
+</body>
+</html>

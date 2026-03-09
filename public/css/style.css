@@ -1,0 +1,153 @@
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.container{
+    flex: 1;
+    padding: 0;
+}
+.navbar{
+    height: 5rem;
+    background-color: white;
+}
+.main-logo{
+    color :#fe424d;
+    font-size: 2rem;
+}
+.nav-link{
+    color: #0b0b0b;
+}
+.fa-brands{
+    font-size: 1.3rem;
+}
+.f-infolink a{
+    text-decoration: none;
+    color: #0b0b0b;
+    margin-right: 1rem;
+}
+.f-infolink a:hover {
+    text-decoration: underline;
+    color: #0b0b0b;
+}
+.f-infolink ul{
+  display: flex;
+  justify-content:center;
+  gap:10px;
+  margin:0;
+  padding:0;
+}
+.f-socials,.f-infolink{
+    width: 100%;
+}
+.f-socials i{
+    margin-right:0.5rem;
+}
+.f-info{
+    height: 7rem;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #ebebeb;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+.f-infobrand p{
+    margin: 0px;
+}
+
+/* index styling  */
+#allListings{
+    margin-left: 2rem;
+}
+.card img{
+width: 100% !important ;
+border-radius: 0.7rem;
+object-fit: cover;
+}
+.card{
+    padding: 0;
+    border: none;
+    margin: 0.7rem;
+}
+.row{
+    margin-left: 4.5rem;
+    margin-right: 4.5rem;
+}
+.card-body{
+    padding: 0;
+}
+.listing-link{
+    text-decoration: none;
+}
+.card-img-overlay{
+    opacity: 0;
+}
+.card-img-overlay:hover{
+    opacity: 0.2;
+    background-color: white;
+}
+/* new listings */
+.form-control{
+    
+    border: 0.09rem solid rgb(102, 100, 100) ;
+}
+.newListing-form .row{
+    margin: 0;
+}
+.newListing-form .row .col-md-4{
+    padding-left: 0;
+    padding-right: 0.5rem;
+}
+.newListing-form .row .col-md-8{
+    padding-left: 0;
+    padding-right: 0rem;
+}
+.new-listing .btn{
+    background-color: #fe424d;
+    width: 5rem;
+    border: 0;
+}
+
+/* show listings */
+.show-image{
+    width: 3rem !important ;
+    height: 15rem;
+}
+.show-card .card-text{
+margin: 0;
+}
+.show-btn1{
+    padding-left: 1.5rem;
+}
+.show-btn1 form button{
+    width: 6rem;
+    background-color: #fe424d;
+    border: 0;
+}
+.show-btn2 form button{
+    width: 6rem;
+    margin-left: 3rem;
+    background-color: #0b0b0b;
+    border: 0;
+}
+
+/* edit-listings */
+.edit-2-row{
+    margin: 0;
+}
+.edit-2-row .col-4{
+    padding-left: 0;
+}
+.edit-2-row .col-8{
+    padding-right: 0;
+}
+.edit-listings .form-control{
+    margin-bottom: 0.5rem;
+}
+.edit-btn{
+    margin-top: 1rem;
+    width: 5rem;
+    background-color: #fe424d;
+    border: 0;
+}

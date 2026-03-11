@@ -5,6 +5,8 @@ const mongoose=require("mongoose")
 const listings=require("./models/model.js")
 const methodOverride =require("method-override")
 const ejsMate =require("ejs-mate")
+const wrapAsync =require("./utils/wrapAsync.js")
+const ExpressError =require("./utils/expressError.js") 
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
@@ -28,23 +30,26 @@ app.get("/",(req,res)=>{
     res.send("all working good")
 })
 
-app.get("/listings",async(req,res)=>{
+app.get("/listings",wrapAsync(async(req,res)=>{
     const allListings = await listings.find({})
     res.render("index.ejs",{allListings})
-})
+}))
 
-app.get("/listing/:id",async(req,res)=>{
+app.get("/listing/:id",wrapAsync(async(req,res)=>{
     let {id}=req.params
     const Listings = await listings.findById(id)
     res.render("show.ejs",{Listings})
-})
+}))
 
 app.get("/listings/new",(req,res)=>{
       res.render("new.ejs")
 })
 
-app.post("/listings",(req,res)=>{
-   let newData=({title,description,image,price,location,country } =req.body)
+app.post("/listings",wrapAsync(async(req,res,next)=>{
+    if(req.body === "undefined"){
+        throw new ExpressError(400,"enter the valid data")
+    }
+    let newData=({title,description,image,price,location,country } =req.body)
    imgurl =newData.image
    if(imgurl ===""){
     imgurl ="https://images.unsplash.com/photo-1625505826533-5c80aca7d157?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGdvYXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
@@ -53,27 +58,38 @@ app.post("/listings",(req,res)=>{
     filename: "listingimage",
     url: imgurl
    }
-   listings.insertOne(newData)
+    await listings.insertOne(newData)
    res.redirect("/listings")
-})
+}));
 
-app.get("/listings/:id/edit",async(req,res)=>{
+app.get("/listings/:id/edit",wrapAsync(async(req,res)=>{
     let {id} =req.params
     editData = await listings.findById(id);
     res.render("edit.ejs",{editData})
-})
+}))
 
-app.put("/listings/:id",async(req,res)=>{
+app.put("/listings/:id",wrapAsync(async(req,res)=>{
     let {id}=req.params ;
     await listings.findByIdAndUpdate(id,{...req.body})
     res.redirect("/listings")
-})
-app.delete("/listings/:id",async(req,res)=>{
+}))
+app.delete("/listings/:id",wrapAsync(async(req,res)=>{
     let {id}=req.params ;
     await listings.findByIdAndDelete(id)
     res.redirect("/listings")
     
+}))
+
+app.all('/*splat',(req,res,next)=>{
+    next( new ExpressError(404,"page not found"));
 })
+
+app.use((err,req,res,next)=>{
+    let {status=500,message="somting went wrong !"}=err;
+    res.status(status).render("error.ejs",{message})
+    // res.status(status).send(message)
+})
+
 app.listen(8080,()=>{
     console.log("listining at port 8080");
 })

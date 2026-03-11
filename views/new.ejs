@@ -3,14 +3,16 @@
     <div class="row">
         <div class="col-8 offset-2">
     <h1>Create A New Listing</h1>
-    <form action="/listings" method="post" class="newListing-form">
+    <form action="/listings" method="post" class="needs-validation newListing-form" novalidate>
             <div class="mb-3">
               <label for="title" class="from-label">Title</label>
-              <input type="text" name="title" placeholder="enter your title" class="form-control">
+              <input type="text" name="title" placeholder="enter your title" class="form-control" required>
+              <div class="valid-feedback">Looks good!</div> 
+              <div class="invalid-feedback">please provide a valid name</div>
             </div>
             <div class="mb-3">
               <label for="description" class="from-label">Description</label>
-              <textarea name="description" placeholder="enter discription" class="form-control"></textarea>
+              <textarea name="description" placeholder="enter discription" class="form-control" required></textarea>
             </div>
             <div class="mb-3">
                 <label for="image" class="from-label">Image url/link</label>
@@ -19,16 +21,16 @@
             <div class="row">
             <div class="mb-3 col-md-4">
                 <label for="price" class="from-label">Price</label>
-                <input type="number" name="price" placeholder="enter price" class="form-control">
+                <input  name="price" placeholder="enter price" class="form-control" required>
             </div>
             <div class="mb-3 col-md-8">
                   <label for="location" class="from-label">Location</label>
-                  <input type="text" name="location" placeholder="enter location" class="form-control">
+                  <input type="text" name="location" placeholder="enter location" class="form-control" required>
             </div>
             </div>
             <div class="mb-3">
                 <label for="country" class="from-label">Country</label>
-                <input type="text" name="country"  placeholder="enter country" class="form-control">
+                <input type="text" name="country"  placeholder="enter country" class="form-control" required >
             </div>
         
         <br>

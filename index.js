@@ -7,8 +7,12 @@ const ejsMate =require("ejs-mate")
 const ExpressError =require("./utils/expressError.js") ;
 const listingsr =require("./routes/listing.js");
 const reviews =require("./routes/review.js");
+const userRouter =require("./routes/user.js");
 const session =require("express-session");
 const flash =require("connect-flash");
+const passport =require("passport");
+const LocalStartegy=require("passport-local");
+const user =require("./models/user.js");
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
@@ -30,16 +34,23 @@ const sessionOption ={
 };
 
 app.get("/",(req,res)=>{
-    res.send("all working good")
+    res.send("all working good");
 });
 
 app.use(session(sessionOption));
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStartegy(user.authenticate()));
+
+passport.serializeUser(user.serializeUser());
+passport.deserializeUser(user.deserializeUser());
+
 main().then(()=>{
-    console.log("connect successfull")
+    console.log("connect successfull");
 }).catch((err)=>{
-    console.log(err)
+    console.log(err);
 })
 
 async function main() {
@@ -52,10 +63,20 @@ app.use((req,res,next)=>{
     next();
 });
 
+app.get("/demouser",async(req,res)=>{
+    let fakeuser =new user({
+        email:"student@gmail.com",
+        username:"student-delta"
+    });
+    let registreduser =await user.register(fakeuser,"helloworld");
+    res.send(registreduser);
+});
+
+//routes
 app.use("/listings",listingsr);
 app.use("/listing",listingsr);
-
 app.use("/listings/:id/reviews",reviews);
+app.use("/",userRouter)
 
 app.all('/*splat',(req,res,next)=>{
     next( new ExpressError(404,"page not found"));

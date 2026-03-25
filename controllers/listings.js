@@ -27,16 +27,16 @@ module.exports.showListing=async(req,res)=>{
 module.exports.createnewlisting=async(req,res,next)=>{
     if(!req.body){
         throw new ExpressError(400,"enter the valid data")
+    };
+    if(!req.file){
+        throw new ExpressError(400,"please upload listing--image")
     }
-    let newData=({title,description,image,price,location,country } =req.body)
-   let imgurl =newData.image
-   if(imgurl ===""){
-    imgurl ="https://images.unsplash.com/photo-1625505826533-5c80aca7d157?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGdvYXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
-   }
-   newData.image ={
-    filename: "listingimage",
-    url: imgurl
-   }
+    let url=req.file.path;
+    let filename =req.file.filename;
+    const {title,description,price,location,country } =req.body
+    let newData={
+        title,description,image:{filename,url},price,location,country
+    };
    newData.owner=req.user._id;
    await listings.insertOne(newData);
    req.flash("success","sucessfully created new listing");
@@ -46,14 +46,24 @@ module.exports.createnewlisting=async(req,res,next)=>{
 module.exports.editformrender=async(req,res)=>{
     let {id} =req.params
     editData = await listings.findById(id);
-    res.render("edit.ejs",{editData})
+    let originalimageurl =editData.image.url;
+    console.log(originalimageurl)
+    originalimageurl = originalimageurl.replace("/upload","/upload/h_300,w_400");
+    console.log(originalimageurl)
+    res.render("edit.ejs",{editData,originalimageurl})
 }
 
 module.exports.editListing=async(req,res)=>{
     let {id}=req.params ;
-    await listings.findByIdAndUpdate(id,{...req.body});
+    let listing =await listings.findByIdAndUpdate(id,{...req.body});
+    if(typeof req.file !=="undefined"){  
+    let url=req.file.path;
+    let filename =req.file.filename;
+    listing.image={filename,url};
+    await listing.save();
+    }
     req.flash("success","listing edited sucessfully");
-    res.redirect("/listings")
+    res.redirect("/listings");
 }
 
 module.exports.deletelisting=async(req,res)=>{

@@ -2,16 +2,19 @@
 <body>
   <div class="row edit-listings">
     <div class="col-7 offset-2 ">
-    <form action="/listings/<%=editData._id%>?_method=PUT" method="post">
+    <form action="/listings/<%=editData._id%>?_method=PUT" method="post" enctype="multipart/form-data">
       <h2>Edit Your Listing</h2>
       <label for="title" class="form-label">Title</label>
       <input type="text" name="title" class="form-control" value="<%=editData.title%>">
 
       <label for="description" class="form-label">Description</label>
       <textarea name="description" class="form-control"><%=editData.description%></textarea>
-      
-      <label for="imageurl" class="form-label">Image-url/Link</label>
-      <input type="text" name="imageurl" class="form-control" value="<%=editData.image.url%>">
+      <div class="mt-1">
+        <p>original image</p>
+        <img src="<%=originalimageurl%>" alt="original image">
+      </div>
+      <label for="imageurl" class="form-label">upload new Image</label>
+      <input type="file" name="listing[image]" class="form-control" required>
       <div class="row edit-2-row">
         <div class="col-4">
           <label for="price" class="form-label">Price</label>

@@ -17,3 +17,16 @@ index route
   dolocalstring()
 --get /listings/new --form submit post req /listings
 --get /listings/id/edit --form submit put req /listings/id
+
+
+"trending"
+    "rooms"
+    "iconic"
+    "mountains"
+    "castles"
+    "Amazing pool"
+    "camping"
+    "farms"
+    "arctic"
+    "beach"
+    "desert"

@@ -33,10 +33,12 @@ module.exports.createnewlisting=async(req,res,next)=>{
     }
     let url=req.file.path;
     let filename =req.file.filename;
-    const {title,description,price,location,country } =req.body
+    console.log(req.body);
+    const {title,description,price,location,country,catagory } =req.body
     let newData={
-        title,description,image:{filename,url},price,location,country
+        title,description,image:{filename,url},price,location,country,catagory
     };
+    console.log(newData);
    newData.owner=req.user._id;
    await listings.insertOne(newData);
    req.flash("success","sucessfully created new listing");
@@ -47,20 +49,22 @@ module.exports.editformrender=async(req,res)=>{
     let {id} =req.params
     editData = await listings.findById(id);
     let originalimageurl =editData.image.url;
-    console.log(originalimageurl)
     originalimageurl = originalimageurl.replace("/upload","/upload/h_300,w_400");
-    console.log(originalimageurl)
     res.render("edit.ejs",{editData,originalimageurl})
 }
 
 module.exports.editListing=async(req,res)=>{
     let {id}=req.params ;
+    console.log(req.body)
     let listing =await listings.findByIdAndUpdate(id,{...req.body});
+    console.log(listing);
     if(typeof req.file !=="undefined"){  
     let url=req.file.path;
     let filename =req.file.filename;
     listing.image={filename,url};
     await listing.save();
+    }else{
+        await listing.save();
     }
     req.flash("success","listing edited sucessfully");
     res.redirect("/listings");
@@ -72,4 +76,10 @@ module.exports.deletelisting=async(req,res)=>{
     req.flash("success","sucessfully deleted a listing");
     res.redirect("/listings")
     
+};
+
+module.exports.listingsFilter=async(req,res)=>{
+    filter=req.params.id;
+    const alllistings = await listings.find({catagory:filter});
+    res.render("filters.ejs",{alllistings});
 }

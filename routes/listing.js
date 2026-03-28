@@ -9,6 +9,8 @@ const upload=multer({storage});
 // new route 
 router.get("/new", isLoggedIn,listingController.newform);
 
+router.get("/filters/:id",listingController.listingsFilter);
+
 router.route("/")
 .get(wrapAsync(listingController.index))
 .post(isLoggedIn,

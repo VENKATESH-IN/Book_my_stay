@@ -37,9 +37,9 @@ const sessionOption ={
     }
 };
 
-app.get("/",(req,res)=>{
-    res.send("all working good");
-});
+// app.get("/",(req,res)=>{
+//     res.send("this is root page");
+// });
 
 app.use(session(sessionOption));
 app.use(flash());
@@ -68,20 +68,23 @@ app.use((req,res,next)=>{
     next();
 });
 
-app.get("/demouser",async(req,res)=>{
-    let fakeuser =new user({
-        email:"student@gmail.com",
-        username:"student-delta"
-    });
-    let registreduser =await user.register(fakeuser,"helloworld");
-    res.send(registreduser);
-});
+
+
+// app.get("/demouser",async(req,res)=>{
+//     let fakeuser =new user({
+//         email:"student@gmail.com",
+//         username:"student-delta"
+//     });
+//     let registreduser =await user.register(fakeuser,"helloworld");
+//     res.send(registreduser);
+// });
 
 //routes
 app.use("/listings",listingsr);
 app.use("/listing",listingsr);
 app.use("/listings/:id/reviews",reviews);
 app.use("/",userRouter)
+app.use("/filters/:id",listingsr);
 
 app.all('/*splat',(req,res,next)=>{
     next( new ExpressError(404,"page not found"));
